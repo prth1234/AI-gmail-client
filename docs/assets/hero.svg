@@ -24,68 +24,141 @@
       font-size: 15px;
       fill: #9ca3af;
     }
+    .ag-hero-tagline-1,
+    .ag-hero-tagline-2,
+    .ag-hero-tagline-3 {
+      opacity: 0;
+      animation: ag-hero-cycle 10.5s ease-in-out infinite;
+    }
+    .ag-hero-tagline-1 { animation-delay: 0s; }
+    .ag-hero-tagline-2 { animation-delay: 3.5s; }
+    .ag-hero-tagline-3 { animation-delay: 7s; }
+
+    @keyframes ag-hero-cycle {
+      0% { opacity: 0; transform: translateY(4px); }
+      5%, 28% { opacity: 1; transform: translateY(0); }
+      33%, 100% { opacity: 0; transform: translateY(-4px); }
+    }
+
     .ag-hero-pill {
       fill: none;
       stroke: #374151;
-      stroke-width: 1.2;
-    }
-    .ag-hero-pill-red {
-      fill: none;
-      stroke: #ea4335;
-      stroke-width: 1.2;
+      stroke-width: 1.25;
+      animation: ag-hero-pill-wave 6s ease-in-out infinite;
     }
     .ag-hero-pill-text {
       font-size: 13px;
       font-weight: 500;
       fill: #d1d5db;
+      animation: ag-hero-text-wave 6s ease-in-out infinite;
     }
-    .ag-hero-pill-text-red {
-      font-size: 13px;
-      font-weight: 600;
-      fill: #ea4335;
+    .ag-hero-p1 { animation-delay: 0s; }
+    .ag-hero-p2 { animation-delay: 1.5s; }
+    .ag-hero-p3 { animation-delay: 3.0s; }
+    .ag-hero-p4 { animation-delay: 4.5s; }
+
+    @keyframes ag-hero-pill-wave {
+      0%, 100% { stroke: #374151; stroke-width: 1.25; }
+      10%, 22% { stroke: #ea4335; stroke-width: 1.8; }
     }
+    @keyframes ag-hero-text-wave {
+      0%, 100% { fill: #d1d5db; }
+      10%, 22% { fill: #ea4335; }
+    }
+
     .ag-hero-dot {
-      animation: ag-hero-pulse 2.6s ease-in-out infinite;
+      fill: #ea4335;
+      animation: ag-hero-pulse 2.2s ease-in-out infinite;
+    }
+    .ag-hero-ring {
+      fill: none;
+      stroke: #ea4335;
+      stroke-width: 1.2;
+      animation: ag-hero-ring-expand 2.2s ease-out infinite;
+    }
+    .ag-hero-cursor {
+      fill: #ea4335;
+      animation: ag-hero-blink 1.1s steps(2, start) infinite;
     }
     @keyframes ag-hero-pulse {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.35; }
+      50% { opacity: 0.45; }
     }
+    @keyframes ag-hero-ring-expand {
+      0% { r: 4.5; opacity: 0.8; }
+      100% { r: 11; opacity: 0; }
+    }
+    @keyframes ag-hero-blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
     @media (prefers-color-scheme: light) {
       .ag-hero-display { fill: #333333; }
       .ag-hero-sub { fill: #555555; }
-      .ag-hero-pill { stroke: #cccccc; }
-      .ag-hero-pill-text { fill: #333333; }
+      .ag-hero-pill { stroke: #cccccc; animation-name: ag-hero-pill-wave-light; }
+      .ag-hero-pill-text { fill: #333333; animation-name: ag-hero-text-wave-light; }
+    }
+    @keyframes ag-hero-pill-wave-light {
+      0%, 100% { stroke: #cccccc; stroke-width: 1.25; }
+      10%, 22% { stroke: #ea4335; stroke-width: 1.8; }
+    }
+    @keyframes ag-hero-text-wave-light {
+      0%, 100% { fill: #333333; }
+      10%, 22% { fill: #ea4335; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .ag-hero-dot { animation: none; }
+      .ag-hero-dot, .ag-hero-ring, .ag-hero-cursor,
+      .ag-hero-pill, .ag-hero-pill-text,
+      .ag-hero-tagline-2, .ag-hero-tagline-3 {
+        animation: none !important;
+      }
+      .ag-hero-tagline-1 {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+      }
+      .ag-hero-tagline-2, .ag-hero-tagline-3 {
+        opacity: 0;
+      }
+      .ag-hero-ring { opacity: 0; }
     }
   </style>
 
   <g class="ag-hero-root" transform="translate(24, 32)">
-    <circle class="ag-hero-dot" cx="6" cy="10" r="4.5" fill="#ea4335" />
-    <text class="ag-hero-eyebrow" x="20" y="15">PYTHON 3.6+ / GMAIL API / OAUTH 2.0</text>
+    <circle class="ag-hero-ring" cx="6" cy="10" r="4.5" />
+    <circle class="ag-hero-dot" cx="6" cy="10" r="4.5" />
+    <text class="ag-hero-eyebrow" x="22" y="15">PYTHON 3.6+ / GMAIL API / OAUTH 2.0</text>
 
     <text class="ag-hero-display" x="0" y="76">
       AI <tspan class="ag-hero-accent">Gmail</tspan> Client
     </text>
+    <rect class="ag-hero-cursor" x="348" y="38" width="4" height="42" rx="1" />
 
-    <text class="ag-hero-sub" x="0" y="114">
-      Minimal Python script that fetches your latest Gmail messages, extracts recursive MIME HTML, and renders index.html.
-    </text>
+    <g>
+      <text class="ag-hero-sub ag-hero-tagline-1" x="0" y="114">
+        Minimal Python script that fetches your latest Gmail messages, extracts recursive MIME HTML, and renders index.html.
+      </text>
+      <text class="ag-hero-sub ag-hero-tagline-2" x="0" y="114">
+        InstalledAppFlow OAuth 2.0 on localhost:8080 with gmail.readonly scope and base64url payload decoding.
+      </text>
+      <text class="ag-hero-sub ag-hero-tagline-3" x="0" y="114">
+        AI-ready foundation designed to plug in LLM summarization, spam filtering, and semantic search.
+      </text>
+    </g>
 
     <g transform="translate(0, 146)">
-      <rect class="ag-hero-pill-red" x="0" y="0" width="112" height="32" rx="6" />
-      <text class="ag-hero-pill-text-red" x="56" y="21" text-anchor="middle">Gmail v1</text>
+      <rect class="ag-hero-pill ag-hero-p1" x="0" y="0" width="112" height="32" rx="6" />
+      <text class="ag-hero-pill-text ag-hero-p1" x="56" y="21" text-anchor="middle">Gmail v1</text>
 
-      <rect class="ag-hero-pill" x="124" y="0" width="136" height="32" rx="6" />
-      <text class="ag-hero-pill-text" x="192" y="21" text-anchor="middle">OAuth :8080</text>
+      <rect class="ag-hero-pill ag-hero-p2" x="124" y="0" width="136" height="32" rx="6" />
+      <text class="ag-hero-pill-text ag-hero-p2" x="192" y="21" text-anchor="middle">OAuth :8080</text>
 
-      <rect class="ag-hero-pill" x="272" y="0" width="136" height="32" rx="6" />
-      <text class="ag-hero-pill-text" x="340" y="21" text-anchor="middle">MIME Parser</text>
+      <rect class="ag-hero-pill ag-hero-p3" x="272" y="0" width="136" height="32" rx="6" />
+      <text class="ag-hero-pill-text ag-hero-p3" x="340" y="21" text-anchor="middle">MIME Parser</text>
 
-      <rect class="ag-hero-pill" x="420" y="0" width="128" height="32" rx="6" />
-      <text class="ag-hero-pill-text" x="484" y="21" text-anchor="middle">index.html</text>
+      <rect class="ag-hero-pill ag-hero-p4" x="420" y="0" width="128" height="32" rx="6" />
+      <text class="ag-hero-pill-text ag-hero-p4" x="484" y="21" text-anchor="middle">index.html</text>
     </g>
   </g>
 </svg>
