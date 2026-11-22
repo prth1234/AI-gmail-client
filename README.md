@@ -1,49 +1,91 @@
-# 🤖 AI Gmail Client
+<p align="center">
+  <img src="docs/assets/hero.svg" alt="AI Gmail Client hero banner" width="100%" />
+</p>
 
-An intelligent Python-powered Gmail interface that fetches your latest emails, extracts rich HTML content, and renders them in a browser with beautifully styled formatting — built with AI-readiness in mind.
-
----
-
-## 🚀 Overview
-
-**AI Gmail Client** is more than just a Gmail reader. It's your stepping stone to building intelligent, automated, and personalized email experiences using Google’s Gmail API + the power of AI.
-
-This client securely authenticates with OAuth 2.0, fetches recent messages, and parses the actual content (including HTML formatting). It sets the stage for advanced features like smart summarization, tagging, prioritization, and AI-powered triage.
-
----
-
-## ✨ Features
-
-| Feature                         | Description |
-|----------------------------------|-------------|
-| 🔐 **OAuth 2.0 Secure Login**     | Authenticates via your Google account using a fixed `localhost:8080` port. |
-| 📩 **Fetches Latest Emails**     | Retrieves and decodes your most recent Gmail messages. |
-| 🧠 **AI-Smart Parsing Engine**   | Recursively extracts the real HTML body, skipping over nested MIME parts. |
-| 🌐 **Clean Browser UI**          | Generates a styled `index.html` file showing email previews. |
-| 🧠 **AI-Ready Architecture**     | Add AI modules for summarization, spam detection, semantic tagging, and more. |
+<p align="center">
+  <a href="#overview">Overview</a> &middot;
+  <a href="#features">Features</a> &middot;
+  <a href="#requirements">Requirements</a> &middot;
+  <a href="#usage">Usage</a> &middot;
+  <a href="#ai-enhancement-ideas">AI Enhancement Ideas</a>
+</p>
 
 ---
 
-## 💡 AI Enhancement Ideas
+## Overview
 
-Take your email client to the next level by adding any of these features using OpenAI, LangChain, or local LLMs:
-
-- ✉️ **Smart Summarization** — Generate TL;DRs using GPT-4 or LLaMA for long emails.
-- 🧹 **Spam Filtering** — Use AI models to flag or hide promotional emails.
-- 🔍 **Semantic Search** — Search emails based on meaning, not keywords.
-- 🗂 **Topic Classification** — Auto-label emails into categories like "Finance", "Work", or "Urgent".
-- 🗣 **Voice Interface** — Add a speech-to-text front end for voice-controlled inbox browsing.
-- 📅 **Auto-Action Detection** — Let AI identify meeting invites, bills, or tasks and suggest calendar entries or follow-ups.
+**AI Gmail Client** is a lightweight Python interface for the Google Gmail API. It authenticates via OAuth 2.0, fetches your latest messages, recursively extracts rich `text/html` MIME payloads, and generates a self-contained `index.html` file with styled email cards ready for browser viewing or downstream AI processing.
 
 ---
 
-## 📦 Requirements
+## Features
 
-- Python 3.6+
-- Gmail API enabled in your Google Cloud project
-- OAuth 2.0 credentials file
+| Feature | Description |
+|---|---|
+| **OAuth 2.0 Secure Login** | Authenticates via your Google account using `InstalledAppFlow` on `localhost:8080` (`gmail.readonly` scope). |
+| **Fetches Latest Emails** | Retrieves and base64url-decodes your 5 most recent Gmail messages (`maxResults=5`). |
+| **Recursive MIME Parsing** | `get_html_part()` traverses nested MIME parts to extract the `text/html` body cleanly. |
+| **Clean Browser Output** | Generates a styled `index.html` file displaying each message in a card layout. |
+| **AI-Ready Foundation** | Structured to plug in summarization, spam filtering, semantic search, or classification modules. |
+
+---
+
+## Pipeline
+
+<p align="center">
+  <img src="docs/assets/pipeline.svg" alt="AI Gmail Client execution pipeline" width="100%" />
+</p>
+
+---
+
+## Requirements
+
+- **Python 3.6+**
+- **Gmail API** enabled in your Google Cloud project
+- **OAuth 2.0 client secrets JSON file** (Desktop app credentials)
 
 Install dependencies:
 
 ```bash
 pip install google-auth google-auth-oauthlib google-api-python-client
+```
+
+---
+
+## Usage
+
+1. **Configure your OAuth credentials path** in `main.py`:
+   Update the path passed to `InstalledAppFlow.from_client_secrets_file(...)` to point to your local Google OAuth client secrets JSON file.
+
+2. **Run the script**:
+   ```bash
+   python main.py
+   ```
+
+3. **Authorize and view**:
+   - Complete the OAuth 2.0 sign-in flow in the browser window opened on `localhost:8080`.
+   - Open the generated `index.html` file in your browser to inspect your latest 5 Gmail messages.
+
+---
+
+## AI Enhancement Ideas
+
+Extend `main.py` using OpenAI, LangChain, or local LLMs:
+
+- **Smart Summarization**: Generate concise TL;DRs for long email threads.
+- **Spam Filtering**: Flag or filter promotional and low-priority messages.
+- **Semantic Search**: Index decoded message bodies for meaning-based retrieval.
+- **Topic Classification**: Auto-tag messages into categories such as Finance, Work, or Urgent.
+- **Voice Interface**: Pair with speech-to-text for hands-free inbox triage.
+- **Auto-Action Detection**: Extract meeting invites, bills, or follow-up tasks automatically.
+
+---
+
+## Project Structure
+
+```text
+AI-gmail-client/
+├── main.py      # OAuth 2.0 auth, Gmail API fetch, recursive MIME parser, HTML generator
+├── index.html   # Generated output displaying the latest 5 Gmail messages
+└── README.md    # Project documentation
+```
