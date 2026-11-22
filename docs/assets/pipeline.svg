@@ -14,12 +14,7 @@
     .ag-pipe-box {
       fill: none;
       stroke: #374151;
-      stroke-width: 1.2;
-    }
-    .ag-pipe-box-red {
-      fill: none;
-      stroke: #ea4335;
-      stroke-width: 1.3;
+      stroke-width: 1.25;
     }
     .ag-pipe-step {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -39,22 +34,65 @@
     .ag-pipe-line {
       fill: none;
       stroke: #4b5563;
-      stroke-width: 1.4;
+      stroke-width: 1.5;
       stroke-dasharray: 5 4;
       animation: ag-pipe-flow 16s linear infinite;
     }
+    .ag-pipe-signal {
+      fill: #ea4335;
+    }
+
+    /* Synchronized 8s cycle across 4 nodes */
+    .ag-pipe-n1-box { animation: ag-pipe-box-pulse 8s ease-in-out infinite 0s; }
+    .ag-pipe-n2-box { animation: ag-pipe-box-pulse 8s ease-in-out infinite 2s; }
+    .ag-pipe-n3-box { animation: ag-pipe-box-pulse 8s ease-in-out infinite 4s; }
+    .ag-pipe-n4-box { animation: ag-pipe-box-pulse 8s ease-in-out infinite 6s; }
+
+    .ag-pipe-n1-title { animation: ag-pipe-title-pulse 8s ease-in-out infinite 0s; }
+    .ag-pipe-n2-title { animation: ag-pipe-title-pulse 8s ease-in-out infinite 2s; }
+    .ag-pipe-n3-title { animation: ag-pipe-title-pulse 8s ease-in-out infinite 4s; }
+    .ag-pipe-n4-title { animation: ag-pipe-title-pulse 8s ease-in-out infinite 6s; }
+
     @keyframes ag-pipe-flow {
       to { stroke-dashoffset: -180; }
     }
+    @keyframes ag-pipe-box-pulse {
+      0%, 32%, 100% { stroke: #374151; stroke-width: 1.25; }
+      8%, 22% { stroke: #ea4335; stroke-width: 1.9; }
+    }
+    @keyframes ag-pipe-title-pulse {
+      0%, 32%, 100% { fill: #f3f4f6; }
+      8%, 22% { fill: #ea4335; }
+    }
+
     @media (prefers-color-scheme: light) {
       .ag-pipe-heading { fill: #555555; }
       .ag-pipe-box { stroke: #cccccc; }
       .ag-pipe-title { fill: #333333; }
       .ag-pipe-body { fill: #555555; }
       .ag-pipe-line { stroke: #9ca3af; }
+      .ag-pipe-n1-box, .ag-pipe-n2-box, .ag-pipe-n3-box, .ag-pipe-n4-box {
+        animation-name: ag-pipe-box-pulse-light;
+      }
+      .ag-pipe-n1-title, .ag-pipe-n2-title, .ag-pipe-n3-title, .ag-pipe-n4-title {
+        animation-name: ag-pipe-title-pulse-light;
+      }
+    }
+    @keyframes ag-pipe-box-pulse-light {
+      0%, 32%, 100% { stroke: #cccccc; stroke-width: 1.25; }
+      8%, 22% { stroke: #ea4335; stroke-width: 1.9; }
+    }
+    @keyframes ag-pipe-title-pulse-light {
+      0%, 32%, 100% { fill: #333333; }
+      8%, 22% { fill: #ea4335; }
     }
     @media (prefers-reduced-motion: reduce) {
       .ag-pipe-line { animation: none; stroke-dasharray: none; }
+      .ag-pipe-n1-box, .ag-pipe-n2-box, .ag-pipe-n3-box, .ag-pipe-n4-box,
+      .ag-pipe-n1-title, .ag-pipe-n2-title, .ag-pipe-n3-title, .ag-pipe-n4-title {
+        animation: none !important;
+      }
+      .ag-pipe-signal { display: none; }
     }
   </style>
 
@@ -62,39 +100,48 @@
     <text class="ag-pipe-heading" x="24" y="28">EXECUTION PIPELINE (main.py)</text>
 
     <!-- Step 1 -->
-    <rect class="ag-pipe-box" x="24" y="52" width="188" height="156" rx="6" />
+    <rect class="ag-pipe-box ag-pipe-n1-box" x="24" y="52" width="188" height="156" rx="6" />
     <text class="ag-pipe-step" x="42" y="80">01 / AUTH</text>
-    <text class="ag-pipe-title" x="42" y="108">OAuth 2.0 Flow</text>
+    <text class="ag-pipe-title ag-pipe-n1-title" x="42" y="108">OAuth 2.0 Flow</text>
     <text class="ag-pipe-body" x="42" y="136">InstalledAppFlow</text>
     <text class="ag-pipe-body" x="42" y="156">local server on</text>
     <text class="ag-pipe-body" x="42" y="176">localhost:8080</text>
 
     <path class="ag-pipe-line" d="M 212 130 L 246 130" />
+    <circle class="ag-pipe-signal" r="3.5">
+      <animateMotion dur="8s" repeatCount="indefinite" path="M 212 130 L 246 130" keyPoints="0;1;1" keyTimes="0;0.25;1" calcMode="linear" />
+    </circle>
 
     <!-- Step 2 -->
-    <rect class="ag-pipe-box" x="246" y="52" width="188" height="156" rx="6" />
+    <rect class="ag-pipe-box ag-pipe-n2-box" x="246" y="52" width="188" height="156" rx="6" />
     <text class="ag-pipe-step" x="264" y="80">02 / FETCH</text>
-    <text class="ag-pipe-title" x="264" y="108">Gmail API List</text>
+    <text class="ag-pipe-title ag-pipe-n2-title" x="264" y="108">Gmail API List</text>
     <text class="ag-pipe-body" x="264" y="136">Queries gmail v1</text>
     <text class="ag-pipe-body" x="264" y="156">with maxResults=5</text>
     <text class="ag-pipe-body" x="264" y="176">in full format</text>
 
     <path class="ag-pipe-line" d="M 434 130 L 468 130" />
+    <circle class="ag-pipe-signal" r="3.5">
+      <animateMotion dur="8s" repeatCount="indefinite" path="M 434 130 L 468 130" keyPoints="0;0;1;1" keyTimes="0;0.25;0.5;1" calcMode="linear" />
+    </circle>
 
     <!-- Step 3 -->
-    <rect class="ag-pipe-box-red" x="468" y="52" width="188" height="156" rx="6" />
+    <rect class="ag-pipe-box ag-pipe-n3-box" x="468" y="52" width="188" height="156" rx="6" />
     <text class="ag-pipe-step" x="486" y="80">03 / PARSE</text>
-    <text class="ag-pipe-title" x="486" y="108">MIME Extraction</text>
+    <text class="ag-pipe-title ag-pipe-n3-title" x="486" y="108">MIME Extraction</text>
     <text class="ag-pipe-body" x="486" y="136">get_html_part()</text>
     <text class="ag-pipe-body" x="486" y="156">recurses nested</text>
     <text class="ag-pipe-body" x="486" y="176">text/html parts</text>
 
     <path class="ag-pipe-line" d="M 656 130 L 690 130" />
+    <circle class="ag-pipe-signal" r="3.5">
+      <animateMotion dur="8s" repeatCount="indefinite" path="M 656 130 L 690 130" keyPoints="0;0;1;1" keyTimes="0;0.5;0.75;1" calcMode="linear" />
+    </circle>
 
     <!-- Step 4 -->
-    <rect class="ag-pipe-box" x="690" y="52" width="186" height="156" rx="6" />
+    <rect class="ag-pipe-box ag-pipe-n4-box" x="690" y="52" width="186" height="156" rx="6" />
     <text class="ag-pipe-step" x="708" y="80">04 / RENDER</text>
-    <text class="ag-pipe-title" x="708" y="108">Static Output</text>
+    <text class="ag-pipe-title ag-pipe-n4-title" x="708" y="108">Static Output</text>
     <text class="ag-pipe-body" x="708" y="136">Decodes base64url</text>
     <text class="ag-pipe-body" x="708" y="156">and writes styled</text>
     <text class="ag-pipe-body" x="708" y="176">index.html cards</text>

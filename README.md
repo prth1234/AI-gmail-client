@@ -4,8 +4,8 @@
 
 <p align="center">
   <a href="#overview">Overview</a> &middot;
+  <a href="#pipeline">Pipeline</a> &middot;
   <a href="#features">Features</a> &middot;
-  <a href="#requirements">Requirements</a> &middot;
   <a href="#usage">Usage</a> &middot;
   <a href="#ai-enhancement-ideas">AI Enhancement Ideas</a>
 </p>
@@ -18,7 +18,18 @@
 
 ---
 
+## Pipeline
+
+<p align="center">
+  <img src="docs/assets/pipeline.svg" alt="AI Gmail Client execution pipeline" width="100%" />
+</p>
+
+---
+
 ## Features
+
+<details open>
+<summary><strong>Core Capabilities</strong></summary>
 
 | Feature | Description |
 |---|---|
@@ -28,47 +39,42 @@
 | **Clean Browser Output** | Generates a styled `index.html` file displaying each message in a card layout. |
 | **AI-Ready Foundation** | Structured to plug in summarization, spam filtering, semantic search, or classification modules. |
 
----
-
-## Pipeline
-
-<p align="center">
-  <img src="docs/assets/pipeline.svg" alt="AI Gmail Client execution pipeline" width="100%" />
-</p>
-
----
-
-## Requirements
-
-- **Python 3.6+**
-- **Gmail API** enabled in your Google Cloud project
-- **OAuth 2.0 client secrets JSON file** (Desktop app credentials)
-
-Install dependencies:
-
-```bash
-pip install google-auth google-auth-oauthlib google-api-python-client
-```
+</details>
 
 ---
 
 ## Usage
 
+```bash
+pip install google-auth google-auth-oauthlib google-api-python-client
+python main.py
+```
+
+<details>
+<summary><strong>Requirements &amp; Step-by-Step Setup</strong></summary>
+
+- **Python 3.6+**
+- **Gmail API** enabled in your Google Cloud project
+- **OAuth 2.0 client secrets JSON file** (Desktop app credentials)
+
 1. **Configure your OAuth credentials path** in `main.py`:
    Update the path passed to `InstalledAppFlow.from_client_secrets_file(...)` to point to your local Google OAuth client secrets JSON file.
-
 2. **Run the script**:
    ```bash
    python main.py
    ```
-
 3. **Authorize and view**:
    - Complete the OAuth 2.0 sign-in flow in the browser window opened on `localhost:8080`.
    - Open the generated `index.html` file in your browser to inspect your latest 5 Gmail messages.
 
+</details>
+
 ---
 
 ## AI Enhancement Ideas
+
+<details>
+<summary><strong>Ways to Extend <code>main.py</code> with LLMs</strong></summary>
 
 Extend `main.py` using OpenAI, LangChain, or local LLMs:
 
@@ -79,9 +85,14 @@ Extend `main.py` using OpenAI, LangChain, or local LLMs:
 - **Voice Interface**: Pair with speech-to-text for hands-free inbox triage.
 - **Auto-Action Detection**: Extract meeting invites, bills, or follow-up tasks automatically.
 
+</details>
+
 ---
 
 ## Project Structure
+
+<details>
+<summary><strong>Repository File Tree</strong></summary>
 
 ```text
 AI-gmail-client/
@@ -89,3 +100,5 @@ AI-gmail-client/
 ├── index.html   # Generated output displaying the latest 5 Gmail messages
 └── README.md    # Project documentation
 ```
+
+</details>
